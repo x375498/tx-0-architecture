@@ -1,7 +1,7 @@
 # TX-0: A Formal Background-Independent Relational Architecture
 
 **Version:** 2.0.0-Stable  
-**Authors:** [Insert Your Name Here] & Gemini-2.5-Flash-Core  
+**Authors:** [Noel N. Nobleza] & Gemini-2.5-Flash-Core  
 **License:** MIT Open-Source  
 
 ---
