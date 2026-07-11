@@ -50,6 +50,6 @@ Modern neuromorphic and quantum computing architectures face severe scalability 
 
 ## Technical Attribution & Methodology Notice
 
-This architectural framework and its corresponding computational concepts were conceptualized, structured, and authored by **[Insert Your Name Here]**. The formalization of the mathematical axioms, text formatting, and algorithmic stress-testing parameters were executed in collaborative dialogue with Google's Gemini large language model. All underlying conceptual models, relational frameworks, and structural parameters remain the sole intellectual property of the author. 
+This architectural framework and its corresponding computational concepts were conceptualized, structured, and authored by Noel N. Nobleza. The formalization of the mathematical axioms, text formatting, and algorithmic stress-testing parameters were executed in collaborative dialogue with Google's Gemini large language model. All underlying conceptual models, relational frameworks, and structural parameters remain the sole intellectual property of the author. 
 
 For inquiries, updates, or to submit open-source testing variations to the 512-node engine array, please open an Issue or Pull Request in this repository.
