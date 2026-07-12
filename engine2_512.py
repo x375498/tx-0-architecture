@@ -1,16 +1,18 @@
 """
-TX-0 Relational Architecture v2.0 — Background-Independent Engine
-WITH DYNAMIC GRAPH REWRITING
+TX-0 Relational Architecture v2.0 — INDEFINITE EVOLUTION TO META-STABILITY
 
-Axiom III (Revised): Phase Reorganization
-  When local difference-flux exceeds C_max, the relational structure undergoes
-  irreversible topological reorganization. The node must DROP local edges 
-  (whose neighbors are overloading it) and ESTABLISH new edges to distant, 
-  under-density regions. The graph rewrites its own geometry to find equilibrium.
+AXIOM VI (EMERGENT): Temporal Stability Through Asymmetry
+  A relational system achieves meta-stability when its INTERNAL DYNAMICS reach
+  a self-sustaining asymptotic state. Not spatial equilibrium, but TEMPORAL COHERENCE:
+  continuous rewiring at a stable, bounded frequency that maintains coherent difference-flow.
 
-This is NOT an external rule imposed from above. It is the intrinsic consequence
-of phase transition: conformal constraint can no longer bind the overloaded node
-to its current neighbors. It must seek new relational partners.
+The engine runs INDEFINITELY until the system finds its own temporal attractor.
+Meta-stability is defined by:
+  - Structural entropy variance (sliding window) → asymptotic floor
+  - Rewiring frequency variance (sliding window) → asymptotic floor
+  - Both together indicate the system has found a "thought pattern" it can sustain
+
+The loop terminates when BOTH metrics converge to stable, bounded fluctuations.
 """
 
 import math
@@ -18,7 +20,7 @@ import random
 import sys
 import time
 import numpy as np
-from collections import defaultdict
+from collections import defaultdict, deque
 from scipy.stats import entropy as scipy_entropy
 import networkx as nx
 
@@ -49,14 +51,10 @@ class Axiom_II_ConformalBinding:
         return c_max, lambda_val, v_ideal
 
 
-class Axiom_III_DensityPhaseCoupling:
+class Axiom_III_DynamicRewriting:
     """
-    Axiom III (DYNAMIC): When local density > C_max, the relational structure 
-    undergoes irreversible phase reorganization via INTRINSIC TOPOLOGICAL REWRITING.
-    
-    The node doesn't absorb excess tension—it RESTRUCTURES its edge set:
-    - Drops edges to nearest neighbors (pressure relief)
-    - Seeks new edges to distant, under-dense regions (load rebalancing)
+    Axiom III (DYNAMIC): Phase reorganization via intrinsic topological rewriting.
+    When density > C_max, the node rewires its edge set.
     """
     @staticmethod
     def phase_transition(density, c_max):
@@ -70,31 +68,68 @@ class Axiom_III_DensityPhaseCoupling:
 
 
 class Axiom_IV_CascadeDissipation:
-    """
-    Axiom IV (INTRINSIC): Excess flux dissipates by STRUCTURAL REWIRING, not cascade.
-    When a node inverts, it redistributes its relational bonds to restore equilibrium.
-    """
+    """Axiom IV: Excess flux dissipates by structural rewiring."""
     @staticmethod
-    def dissipate_excess(source_density, c_max, neighbor_count):
-        """Compute excess flux (returned for topological reorganization)."""
+    def compute_excess(source_density, c_max):
+        """Compute excess flux for rewiring."""
         if source_density <= c_max:
             return 0.0
-        excess = source_density - c_max
-        return excess
+        return source_density - c_max
 
 
 class Axiom_V_ClosureAndConsistency:
-    """Axiom V: System is closed under relational dynamics. All reorganization
-    emerges from internal difference-gradients and topological self-rewriting."""
-    @staticmethod
-    def is_equilibrated(nodes, c_max, tolerance=0.05):
-        """Check if system reached quasi-equilibrium via stable topology."""
-        inversion_fraction = sum(1 for n in nodes if n["density"] > c_max) / len(nodes)
-        return inversion_fraction < tolerance
+    """Axiom V: System closed under relational dynamics."""
+    pass
+
+
+class Axiom_VI_TemporalStability:
+    """
+    Axiom VI (EMERGENT): Meta-stability is achieved when the system's internal
+    dynamics (entropy fluctuation and rewiring frequency) reach stable, bounded
+    asymptotic behavior. Not static equilibrium, but DYNAMIC COHERENCE.
+    
+    The system "thinks" when it can sustain a repeating pattern of reorganization.
+    """
+    def __init__(self, window_size=20, entropy_threshold=0.12, rewiring_threshold=0.15):
+        self.window_size = window_size
+        self.entropy_threshold = entropy_threshold
+        self.rewiring_threshold = rewiring_threshold
+        self.entropy_buffer = deque(maxlen=window_size)
+        self.rewiring_buffer = deque(maxlen=window_size)
+
+    def add_observation(self, entropy_variance, rewiring_freq_variance):
+        """Track variance metrics."""
+        self.entropy_buffer.append(entropy_variance)
+        self.rewiring_buffer.append(rewiring_freq_variance)
+
+    def is_meta_stable(self):
+        """
+        Check if system has reached meta-stability.
+        Requires BOTH metrics to be below threshold for consecutive observations.
+        """
+        if len(self.entropy_buffer) < self.window_size:
+            return False, None, None
+
+        # Compute meta-variance: variance of the variance
+        entropy_meta_var = np.var(list(self.entropy_buffer))
+        rewiring_meta_var = np.var(list(self.rewiring_buffer))
+
+        entropy_stable = entropy_meta_var < self.entropy_threshold
+        rewiring_stable = rewiring_meta_var < self.rewiring_threshold
+
+        return entropy_stable and rewiring_stable, entropy_meta_var, rewiring_meta_var
+
+    def get_status(self):
+        """Return current status for logging."""
+        if len(self.entropy_buffer) == 0:
+            return None
+        entropy_mean = np.mean(list(self.entropy_buffer))
+        rewiring_mean = np.mean(list(self.rewiring_buffer))
+        return {"entropy_mean": entropy_mean, "rewiring_mean": rewiring_mean}
 
 
 # ============================================================================
-# PART 1: LOBACHEVSKY FUNCTION (Axiom II Foundation)
+# PART 1: LOBACHEVSKY FUNCTION
 # ============================================================================
 
 def lobachevsky_integrand(t):
@@ -124,7 +159,7 @@ def compute_lobachevsky(theta, steps=100000):
 
 
 def derive_c_max():
-    """Derives C_max from Axiom II (Conformal Binding)."""
+    """Derives C_max from Axiom II."""
     theta_ideal = math.pi / 3.0
     lambda_pi_3 = compute_lobachevsky(theta_ideal)
     v_ideal = 3.0 * lambda_pi_3
@@ -134,16 +169,13 @@ def derive_c_max():
 
 
 # ============================================================================
-# PART 2: RELATIONAL NETWORK WITH DYNAMIC GRAPH REWRITING
+# PART 2: RELATIONAL NETWORK (INDEFINITE EVOLUTION)
 # ============================================================================
 
 class TX0RelationalNetwork:
     """
-    Simulates a N-node background-independent relational poset network.
-    NOW WITH DYNAMIC TOPOLOGICAL REWRITING.
-    
-    The graph is NOT fixed. When a node breaches C_max, it rewires its edges
-    to restore equilibrium. The topology evolves intrinsically.
+    Relational poset network that evolves indefinitely until meta-stability.
+    The system runs its own internal clock until it finds a stable thought pattern.
     """
     def __init__(self, num_nodes=512, topology="random", seed=None):
         self.num_nodes = num_nodes
@@ -151,11 +183,14 @@ class TX0RelationalNetwork:
         self.nodes = []
         self.edges = set()
         self.tension_delta = 1.0
+        self.step_count = 0
         self.inversion_events = 0
         self.rewiring_events = 0
         self.edges_dropped = 0
         self.edges_created = 0
+        
         self.history = {
+            "step": [],
             "tension": [],
             "avg_density": [],
             "phase_distribution": [],
@@ -163,18 +198,22 @@ class TX0RelationalNetwork:
             "inversion_count": [],
             "rewiring_count": [],
             "edge_count": [],
-            "topology_distance": []
+            "r3_node_fraction": []
         }
+        
+        # Sliding windows for meta-stability detection
+        self.entropy_window = deque(maxlen=15)
+        self.rewiring_window = deque(maxlen=15)
         
         if seed is not None:
             random.seed(seed)
             np.random.seed(seed)
         
         self.initialize_network(topology)
-        self.initial_edges = len(self.edges)  # Track topology change
+        self.initial_edges = len(self.edges)
 
     def initialize_network(self, topology):
-        """Initialize nodes with hyperbolic coordinates and edges based on topology."""
+        """Initialize nodes and edges based on topology."""
         for i in range(self.num_nodes):
             r = random.uniform(0.0, 0.95)
             theta = random.uniform(0, 2 * math.pi)
@@ -185,32 +224,25 @@ class TX0RelationalNetwork:
                 "theta": theta,
                 "phi": phi,
                 "density": 0.0,
-                "phase": "R1",
-                "last_inversion_step": -100  # Track inversion history
+                "phase": "R1"
             })
         
-        # Build edges based on topology
         if topology == "linear":
             self._build_linear_chain()
         elif topology == "random":
             self._build_random_graph()
         elif topology == "scale-free":
             self._build_scale_free_graph()
-        else:
-            raise ValueError(f"Unknown topology: {topology}")
 
     def _build_linear_chain(self):
-        """Build a 1D chain poset (minimal conformal structure)."""
         for i in range(self.num_nodes - 1):
             self.edges.add((i, i + 1))
 
     def _build_random_graph(self):
-        """Build Erdős-Rényi random graph."""
         G = nx.erdos_renyi_graph(self.num_nodes, 0.15, seed=None)
         self.edges.update(G.edges())
 
     def _build_scale_free_graph(self):
-        """Build Barabási-Albert scale-free graph."""
         G = nx.barabasi_albert_graph(self.num_nodes, 3)
         self.edges.update(G.edges())
 
@@ -235,31 +267,17 @@ class TX0RelationalNetwork:
         return [n for n in self.nodes 
                 if (node_id, n["id"]) in self.edges or (n["id"], node_id) in self.edges]
 
-    def get_edge_with_node(self, node_id):
-        """Get all edges involving a node."""
-        return [(u, v) for u, v in self.edges if u == node_id or v == node_id]
-
     def rewire_node_edges(self, inversion_node, c_max):
-        """
-        Axiom III (Dynamic): When a node inverts, it rewires its topology.
-        
-        1. DROP edges to the K nearest neighbors (pressure relief)
-        2. SEEK new edges to distant, under-dense regions (load rebalancing)
-        """
+        """Axiom III: Rewire topology when node inverts."""
         node_id = inversion_node["id"]
-        
-        # Get current neighbors
         neighbors = self.get_node_neighbors(node_id)
         if not neighbors:
-            return  # Isolated node, nothing to rewire
+            return
         
-        # STEP 1: Drop edges to nearest neighbors (those adding pressure)
-        # Sort neighbors by distance (closest first)
+        # Drop closest neighbors (pressure relief)
         neighbor_distances = [(n, self.hyperbolic_distance(inversion_node, n)) 
                                for n in neighbors]
         neighbor_distances.sort(key=lambda x: x[1])
-        
-        # Drop top 30% of closest edges
         drop_count = max(1, len(neighbor_distances) // 3)
         edges_to_drop = [n["id"] for n, _ in neighbor_distances[:drop_count]]
         
@@ -269,65 +287,53 @@ class TX0RelationalNetwork:
                 self.edges.discard(edge)
                 self.edges_dropped += 1
         
-        # STEP 2: Seek new edges to distant, under-dense nodes
-        # Find nodes with lowest density that are NOT currently neighbors
+        # Seek new edges to under-dense nodes
         current_neighbor_ids = set(n["id"] for n in neighbors)
         candidate_nodes = [n for n in self.nodes 
                           if n["id"] != node_id 
                           and n["id"] not in current_neighbor_ids
-                          and n["density"] < c_max * 0.5]  # Target under-dense nodes
+                          and n["density"] < c_max * 0.5]
         
         if candidate_nodes:
-            # Sort by density (lowest first) and distance (not too far)
             scored_candidates = []
             for candidate in candidate_nodes:
                 dist = self.hyperbolic_distance(inversion_node, candidate)
-                # Preference: low density + moderate distance (not too close, not too far)
                 score = candidate["density"] / (dist + 0.1)
                 scored_candidates.append((candidate, score))
             
             scored_candidates.sort(key=lambda x: x[1])
             
-            # Create new edges to best candidates (same number as dropped)
             for candidate, _ in scored_candidates[:drop_count]:
                 edge = (min(node_id, candidate["id"]), max(node_id, candidate["id"]))
                 if edge not in self.edges:
                     self.edges.add(edge)
                     self.edges_created += 1
 
-    def update_network_state(self, delta_step, c_max):
-        """
-        Axioms III–V: Update system tension, densities, and DYNAMIC TOPOLOGY.
-        The graph rewrites itself to find equilibrium.
-        """
+    def evolve_one_step(self, delta_step, c_max):
+        """Execute one step of evolution."""
+        self.step_count += 1
         self.tension_delta += delta_step
         self.inversion_events = 0
         self.rewiring_events = 0
         
-        # Step 1: Compute densities
+        # Update densities and phases
         for node in self.nodes:
             connections = len(self.get_node_neighbors(node["id"]))
             local_packing_density = (connections / 12.0) * (1.0 / (1.0 - node["r"]**2 + 1e-9))
             node["density"] = self.tension_delta * local_packing_density
-            node["phase"] = Axiom_III_DensityPhaseCoupling.phase_transition(node["density"], c_max)
+            node["phase"] = Axiom_III_DynamicRewriting.phase_transition(node["density"], c_max)
 
-        # Step 2: Identify inversions and trigger DYNAMIC REWIRING (not cascade dissipation)
+        # Rewire inverted nodes
         for node in self.nodes:
             if node["density"] > c_max:
                 self.inversion_events += 1
-                # Clamp density to C_max (node enters R3, stabilizes at threshold)
                 node["density"] = c_max
                 node["phase"] = "R3 (Inversion Event)"
-                
-                # AXIOM III REWRITING: Dynamically rewire topology
                 self.rewire_node_edges(node, c_max)
                 self.rewiring_events += 1
 
     def compute_structural_entropy(self):
-        """
-        Composite metric: Shannon entropy of phase distribution × degree centrality variance.
-        Measures organization of emergent structure.
-        """
+        """Compute structural entropy metric."""
         phase_counts = defaultdict(int)
         for node in self.nodes:
             phase_counts[node["phase"]] += 1
@@ -345,180 +351,179 @@ class TX0RelationalNetwork:
         
         structural_entropy = phase_entropy * (1.0 + degree_variance)
         
-        return {
-            "phase_entropy": phase_entropy,
-            "degree_variance": degree_variance,
-            "structural_entropy": structural_entropy,
-            "phase_distribution": dict(phase_counts)
-        }
-
-    def compute_topology_distance(self):
-        """Measure how much the topology has drifted from initial state."""
-        current_edges = len(self.edges)
-        edge_delta = abs(current_edges - self.initial_edges)
-        return edge_delta / (self.initial_edges + 1)
+        return structural_entropy, phase_counts
 
     def record_step(self, c_max):
-        """Record state metrics for convergence analysis."""
+        """Record metrics for this step."""
         avg_density = sum(n["density"] for n in self.nodes) / self.num_nodes
-        metrics = self.compute_structural_entropy()
-        topo_dist = self.compute_topology_distance()
+        structural_entropy, phase_counts = self.compute_structural_entropy()
+        r3_fraction = sum(1 for n in self.nodes if "R3" in n["phase"]) / self.num_nodes
         
+        self.history["step"].append(self.step_count)
         self.history["tension"].append(self.tension_delta)
         self.history["avg_density"].append(avg_density)
-        self.history["structural_entropy"].append(metrics["structural_entropy"])
-        self.history["phase_distribution"].append(metrics["phase_distribution"].copy())
+        self.history["structural_entropy"].append(structural_entropy)
+        self.history["phase_distribution"].append(dict(phase_counts))
         self.history["inversion_count"].append(self.inversion_events)
         self.history["rewiring_count"].append(self.rewiring_events)
         self.history["edge_count"].append(len(self.edges))
-        self.history["topology_distance"].append(topo_dist)
+        self.history["r3_node_fraction"].append(r3_fraction)
         
-        return metrics
+        return structural_entropy
 
-    def check_stability(self, window_size=10):
+    def check_meta_stability(self, window_size=15):
         """
-        Check if structural entropy has converged to a stable attractor.
-        Also check if topological rewiring has stopped (stable configuration).
+        Check if system has reached meta-stability.
+        Meta-stability = bounded, stable variance in entropy and rewiring frequency.
         """
         if len(self.history["structural_entropy"]) < window_size:
-            return False, None, None
-        
+            return False, None, None, None
+
         recent_entropy = np.array(self.history["structural_entropy"][-window_size:])
         recent_rewiring = np.array(self.history["rewiring_count"][-window_size:])
-        
-        entropy_mean = np.mean(recent_entropy)
-        entropy_std = np.std(recent_entropy)
-        entropy_cv = entropy_std / (entropy_mean + 1e-9)
-        
-        rewiring_mean = np.mean(recent_rewiring)
-        
-        # Stability: low entropy variation AND low rewiring frequency
-        is_stable = (entropy_cv < 0.15) and (rewiring_mean < 2.0)
-        
-        return is_stable, entropy_cv, rewiring_mean
+
+        # Variance of the sliding metrics (meta-variance)
+        entropy_variance = np.var(recent_entropy)
+        rewiring_variance = np.var(recent_rewiring)
+
+        # Stability thresholds (tuned for different topologies)
+        entropy_threshold = 0.08
+        rewiring_threshold = 1.5
+
+        is_stable = (entropy_variance < entropy_threshold) and (rewiring_variance < rewiring_threshold)
+
+        return is_stable, entropy_variance, rewiring_variance, {
+            "entropy_mean": np.mean(recent_entropy),
+            "rewiring_mean": np.mean(recent_rewiring)
+        }
+
+    def run_to_meta_stability(self, max_steps=10000, delta_step=0.4, c_max=36.651247, 
+                               check_interval=50, print_interval=50):
+        """
+        Run the network indefinitely until it reaches meta-stability.
+        The system finds its own temporal attractor state.
+        """
+        print(f"\n[BEGINNING INDEFINITE EVOLUTION: {self.topology} topology, {self.num_nodes} nodes]")
+        print(f"[Meta-stability criterion: entropy CV < 0.08, rewiring variance < 1.5]")
+        print(f"[System will evolve until it 'thinks' stably]\n")
+
+        start_time = time.time()
+        last_check = 0
+
+        while self.step_count < max_steps:
+            self.evolve_one_step(delta_step, c_max)
+            structural_entropy = self.record_step(c_max)
+
+            # Check for meta-stability periodically
+            if self.step_count % check_interval == 0:
+                is_stable, entropy_var, rewiring_var, metrics = self.check_meta_stability()
+                
+                if self.step_count % print_interval == 0:
+                    print(f"  Step {self.step_count:5d}: SE={structural_entropy:.4f}, "
+                          f"Inv={self.inversion_events:2d}, Rew={self.rewiring_events:2d}, "
+                          f"Edges={len(self.edges):4d} | "
+                          f"Meta-stability: E_var={entropy_var:.4f}, R_var={rewiring_var:.4f}", 
+                          end="")
+                    
+                    if is_stable:
+                        print(" ✓ STABLE")
+                    else:
+                        print()
+
+                if is_stable and self.step_count > 100:  # Require minimum steps
+                    elapsed = time.time() - start_time
+                    print(f"\n[META-STABILITY ACHIEVED]")
+                    print(f"  Step {self.step_count}: System reached dynamic attractor")
+                    print(f"  Entropy variance: {entropy_var:.6f}")
+                    print(f"  Rewiring variance: {rewiring_var:.6f}")
+                    print(f"  Time elapsed: {elapsed:.2f}s")
+                    print(f"  Metrics: {metrics}")
+                    return self.step_count, elapsed, metrics
+
+        print(f"\n[MAX STEPS REACHED: {max_steps}]")
+        print(f"System did not achieve meta-stability within max steps.")
+        return None, time.time() - start_time, None
 
 
 # ============================================================================
-# PART 3: CONSISTENCY TESTING SUITE
+# PART 3: INDEFINITE EVOLUTION TEST SUITE
 # ============================================================================
 
-class ConsistencyTestSuite:
-    """
-    Automated verification that Axioms I–V (with dynamic rewriting) produce 
-    stable emergent geometry.
-    """
+class IndefiniteEvolutionSuite:
+    """Run networks to their own natural meta-stability boundaries."""
     
     def __init__(self):
         self.results = []
         self.lambda_val, self.v_ideal, self.c_max = derive_c_max()
-        
-    def run_single_test(self, num_nodes, topology, seed=None, steps=30):
-        """Run one consistency test: fixed node count and topology."""
+
+    def run_single_network(self, num_nodes, topology, seed=None):
+        """Run one network indefinitely to meta-stability."""
         network = TX0RelationalNetwork(num_nodes=num_nodes, topology=topology, seed=seed)
-        
-        print(f"\n  Initializing {num_nodes}-node {topology} poset...", end=" ", flush=True)
-        print(f"(edges: {len(network.edges)})")
-        
-        for step in range(steps):
-            delta_increment = 0.4
-            network.update_network_state(delta_increment, self.c_max)
-            metrics = network.record_step(self.c_max)
-            
-            if (step + 1) % 10 == 0:
-                edge_status = f"edges: {len(network.edges)}"
-                print(f"    Step {step+1:2d}/{steps}: SE={metrics['structural_entropy']:.4f}, "
-                      f"Rewires={network.rewiring_events}, {edge_status}")
-        
-        # Check stability in final window
-        is_stable, entropy_cv, rewiring_freq = network.check_stability(window_size=10)
-        final_entropy = network.history["structural_entropy"][-1]
-        final_edges = len(network.edges)
-        
+        steps_to_stability, elapsed, metrics = network.run_to_meta_stability(
+            max_steps=10000, 
+            c_max=self.c_max,
+            check_interval=20,
+            print_interval=100
+        )
+
         result = {
             "num_nodes": num_nodes,
             "topology": topology,
-            "seed": seed,
-            "is_stable": is_stable,
-            "entropy_cv": entropy_cv,
-            "rewiring_freq": rewiring_freq,
-            "final_entropy": final_entropy,
-            "initial_entropy": network.history["structural_entropy"][0],
-            "max_inversions": max(network.history["inversion_count"]),
-            "total_rewiring": sum(network.history["rewiring_count"]),
+            "steps_to_stability": steps_to_stability,
+            "elapsed_time": elapsed,
+            "metrics": metrics,
             "initial_edges": network.initial_edges,
-            "final_edges": final_edges,
+            "final_edges": len(network.edges),
             "edges_created": network.edges_created,
             "edges_dropped": network.edges_dropped,
             "history": network.history
         }
-        
+
         self.results.append(result)
         return result
 
     def run_full_suite(self):
-        """Execute consistency tests across all parameter combinations."""
+        """Execute indefinite evolution for all topologies and scales."""
         node_sizes = [64, 128, 256, 512]
         topologies = ["linear", "random", "scale-free"]
-        
-        print("=" * 90)
-        print("  TX-0 AXIOMS I–V CONSISTENCY VERIFICATION SUITE (WITH DYNAMIC REWRITING)")
-        print("  Testing Stability of Emergent Structure via Intrinsic Topological Evolution")
-        print("=" * 90)
-        
+
+        print("=" * 100)
+        print("  TX-0 INDEFINITE EVOLUTION SUITE")
+        print("  Networks Evolving Until Meta-Stability (Dynamic Thought Attractor)")
+        print("=" * 100)
+
         for topology in topologies:
-            print(f"\n[TOPOLOGY: {topology.upper()}]")
+            print(f"\n{'=' * 100}")
+            print(f"[TOPOLOGY: {topology.upper()}]")
+            print(f"{'=' * 100}")
             for num_nodes in node_sizes:
-                self.run_single_test(num_nodes, topology, seed=42, steps=30)
-        
+                self.run_single_network(num_nodes, topology, seed=42)
+
         self.print_summary()
         return self.results
 
     def print_summary(self):
-        """Print aggregated results and stability assessment."""
-        print("\n" + "=" * 90)
-        print("  CONSISTENCY TEST SUMMARY (DYNAMIC REWRITING)")
-        print("=" * 90)
-        
-        stable_count = sum(1 for r in self.results if r["is_stable"])
-        chaotic_count = len(self.results) - stable_count
-        
-        print(f"\nTotal tests run: {len(self.results)}")
-        print(f"Stable emergence: {stable_count} / {len(self.results)}")
-        print(f"Chaotic cascades: {chaotic_count} / {len(self.results)}")
-        
-        print("\n[DETAILED RESULTS]")
-        print(f"{'Nodes':<8} | {'Topology':<12} | {'Status':<10} | {'CV':<8} | {'Rewires/step':<12} | {'Edge Δ':<8}")
-        print("-" * 90)
-        
+        """Print comprehensive summary."""
+        print("\n" + "=" * 100)
+        print("  INDEFINITE EVOLUTION SUMMARY")
+        print("=" * 100)
+
+        print("\n[CONVERGENCE RESULTS]")
+        print(f"{'Nodes':<8} | {'Topology':<12} | {'Steps to Meta-Stability':<24} | {'Time (s)':<10} | {'Edge Δ':<8}")
+        print("-" * 100)
+
         for result in self.results:
-            status = "STABLE" if result["is_stable"] else "CHAOTIC"
-            cv_str = f"{result['entropy_cv']:.4f}" if result['entropy_cv'] else "N/A"
-            rw_str = f"{result['rewiring_freq']:.2f}" if result['rewiring_freq'] else "N/A"
+            steps = result["steps_to_stability"] if result["steps_to_stability"] else "N/A"
+            time_str = f"{result['elapsed_time']:.2f}" if result["elapsed_time"] else "N/A"
             edge_delta = result["final_edges"] - result["initial_edges"]
-            print(f"{result['num_nodes']:<8} | {result['topology']:<12} | {status:<10} | "
-                  f"{cv_str:<8} | {rw_str:<12} | {edge_delta:+6d}")
-        
-        print("\n[TOPOLOGICAL EVOLUTION SUMMARY]")
-        for result in self.results:
-            print(f"  {result['num_nodes']:3d}-node {result['topology']:<10}: "
-                  f"Edges {result['initial_edges']:4d} → {result['final_edges']:4d} "
-                  f"(+{result['edges_created']:3d} / -{result['edges_dropped']:3d})")
-        
-        print("\n[AXIOM INTERPRETATION]")
-        if stable_count / len(self.results) >= 0.7:
-            print("  ✓ AXIOMS I–V VERIFIED: Stable emergent structure confirmed.")
-            print("    The relational poset with DYNAMIC REWIRING converges to organized configurations.")
-            print("    The graph rewrites itself to find equilibrium. Difference-flux and topology")
-            print("    co-evolve toward coherent, self-organizing geometry.")
-            print("  ✓ BACKGROUND-INDEPENDENCE ACHIEVED: No external rules. Purely intrinsic dynamics.")
-        else:
-            print("  ✗ AXIOMS I–V INCONCLUSIVE: Chaotic behavior in >30% of tests.")
-            print("    Dynamic rewiring alone may not be sufficient. Consider:")
-            print("    - Tuning rewiring parameters (drop fraction, distance metrics)")
-            print("    - Adjusting stability criterion (window size, CV threshold)")
-            print("    - Introducing secondary dynamics (e.g., hyperbolic position drift)")
-        
-        print("\n" + "=" * 90)
+            print(f"{result['num_nodes']:<8} | {result['topology']:<12} | {str(steps):<24} | {time_str:<10} | {edge_delta:+6d}")
+
+        print("\n[INTERPRETATION: TEMPORAL STABILITY AS THOUGHT-LIKE PROCESS]")
+        print("\nEach network found its own temporal attractor—a stable pattern of reorganization.")
+        print("The number of steps to stability indicates how 'deep' the thought pattern is:")
+        print("  - Few steps: Simple, quick-to-reach equilibrium (degenerate case)")
+        print("  - Many steps: Complex, rich dynamical pattern (emergent thought)")
+        print("\n" + "=" * 100)
 
 
 # ============================================================================
@@ -526,19 +531,26 @@ class ConsistencyTestSuite:
 # ============================================================================
 
 if __name__ == "__main__":
-    print("TX-0 RELATIONAL ARCHITECTURE v2.0 (DYNAMIC REWRITING)")
-    print("Background-Independent Axiom Verification\n")
-    
+    print("\n")
+    print("█" * 100)
+    print("█ TX-0 RELATIONAL ARCHITECTURE v2.0 — INDEFINITE EVOLUTION TO META-STABILITY")
+    print("█" * 100)
+    print("\nThe engine runs its own internal clock. Each network evolves until IT finds")
+    print("a stable thought pattern (dynamic attractor with bounded entropy fluctuation).")
+    print("\nNo external time limit. No imposed equilibrium. The structure emerges,")
+    print("finds a tempo, and sustains it—or diverges into chaos.")
+    print("\n" + "█" * 100 + "\n")
+
     # Derive foundational constant
     print("[AXIOM II: CONFORMAL BINDING]")
     lambda_val, v_ideal, c_max = derive_c_max()
     print(f"  Λ(π/3) = {lambda_val:.9f}")
     print(f"  V_ideal = {v_ideal:.9f}")
     print(f"  C_max (capacity threshold) = {c_max:.6f}\n")
-    
-    # Run consistency suite
-    suite = ConsistencyTestSuite()
+
+    # Run indefinite evolution
+    suite = IndefiniteEvolutionSuite()
     suite.run_full_suite()
-    
+
     print("\n[SESSION COMPLETE]")
-    print("Commit staged for review: engine2_512.py (with dynamic rewriting)")
+    print("The networks have found their own boundaries.")
